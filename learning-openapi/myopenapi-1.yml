@@ -1,0 +1,81 @@
+openapi: '3.0.2'
+info:
+  title: Learning Open API - 1 - Golfers api
+  version: '1.0'
+servers:
+  - url: https://api.server.test/v1
+paths:
+  /test:
+    get:
+      responses:
+        '200':
+          description: OK
+  /player:
+    description: Player resource
+    get:
+      description: Operation to fetch players
+      parameters:
+        - in: query
+          name: playername
+          required: true
+          schema:
+            type: string
+            example: Geoff
+      responses:
+        200: 
+          description: Successfully acquired players
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/players"
+
+  /player{id}:
+    description: Get player using a PlayerID
+    get: 
+      parameters:
+        - in: path
+          name: PlayerID
+          required: true
+          schema: 
+            type: integer
+      responses:
+        200:
+          description: Successfully acquire player
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/player"
+
+components:
+  schemas:
+    player:
+      type: object
+      properties:
+        PlayerID:
+          type: integer
+          example: 3
+        PlayerFirstName:
+          type: string
+          example: John
+        PlayerLastName:
+          type: string
+          example: Doe
+        Handicap: 
+          type: integer
+          example: 10
+    players: 
+      type: array
+      items:
+        properties:
+          PlayerID:
+            type: integer
+            example: 3
+          PlayerFirstName:
+            type: string
+            example: John
+          PlayerLastName:
+            type: string
+            example: Doe
+          Handicap: 
+            type: integer
+            example: 10
